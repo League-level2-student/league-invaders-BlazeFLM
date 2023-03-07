@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
 import javax.swing.Timer;
 import javax.swing.JPanel;
 
@@ -17,6 +16,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	Font titleFont = new Font("Arial", Font.PLAIN, 48);
 	Font instructionsFont = new Font("Arial", Font.PLAIN, 30);
 	Timer frameDraw;
+	Rocketship rocket = new Rocketship(250, 700, 50, 50, 20);
 
 	public GamePanel() {
 		frameDraw = new Timer(1000 / 60, this);
@@ -57,6 +57,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	void drawGameState(Graphics g) {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
+		rocket.draw(g);
 	}
 
 	void drawEndState(Graphics g) {
@@ -94,24 +95,41 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 				currentState++;
 			}
 		}
-		if (arg0.getKeyCode() == KeyEvent.VK_UP) {
-			if (currentState == GAME) {
-				System.out.println("UP");
+		if (currentState == GAME) {
+			if (arg0.getKeyCode() == KeyEvent.VK_UP) {
+				if (rocket.y > 0) {
+					System.out.println("UP");
+					rocket.up();
+					repaint();
+				}
 			}
-		}
-		if (arg0.getKeyCode() == KeyEvent.VK_DOWN) {
-			if (currentState == GAME) {
-				System.out.println("DOWN");
+
+			if (arg0.getKeyCode() == KeyEvent.VK_DOWN) {
+				if (currentState == GAME) {
+					if (rocket.y < LeagueInvaders.HEIGHT - 95) {
+						System.out.println("DOWN");
+						rocket.down();
+						repaint();
+					}
+				}
 			}
-		}
-		if (arg0.getKeyCode() == KeyEvent.VK_LEFT) {
-			if (currentState == GAME) {
-				System.out.println("LEFT");
+			if (arg0.getKeyCode() == KeyEvent.VK_LEFT) {
+				if (currentState == GAME) {
+					if (rocket.x > 0) {
+						System.out.println("LEFT");
+						rocket.left();
+						repaint();
+					}
+				}
 			}
-		}
-		if (arg0.getKeyCode() == KeyEvent.VK_RIGHT) {
-			if (currentState == GAME) {
-				System.out.println("RIGHT");
+			if (arg0.getKeyCode() == KeyEvent.VK_RIGHT) {
+				if (currentState == GAME) {
+					if (rocket.x < LeagueInvaders.WIDTH - 50) {
+						System.out.println("RIGHT");
+						rocket.right();
+						repaint();
+					}
+				}
 			}
 		}
 	}
