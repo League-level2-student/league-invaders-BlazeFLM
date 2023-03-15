@@ -16,7 +16,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	Font titleFont = new Font("Arial", Font.PLAIN, 48);
 	Font instructionsFont = new Font("Arial", Font.PLAIN, 30);
 	Timer frameDraw;
-	Rocketship rocket = new Rocketship(250, 700, 50, 50, 20);
+	Rocketship rocket = new Rocketship(250, 700, 50, 50, 10);
 
 	public GamePanel() {
 		frameDraw = new Timer(1000 / 60, this);
@@ -38,6 +38,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void updateGameState() {
+		rocket.move();
 	}
 
 	void updateEndState() {
@@ -99,7 +100,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			if (arg0.getKeyCode() == KeyEvent.VK_UP) {
 				if (rocket.y > 0) {
 					System.out.println("UP");
-					rocket.up();
+					rocket.up = true;
 					repaint();
 				}
 			}
@@ -108,7 +109,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 				if (currentState == GAME) {
 					if (rocket.y < LeagueInvaders.HEIGHT - 95) {
 						System.out.println("DOWN");
-						rocket.down();
+						rocket.down = true;
 						repaint();
 					}
 				}
@@ -117,7 +118,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 				if (currentState == GAME) {
 					if (rocket.x > 0) {
 						System.out.println("LEFT");
-						rocket.left();
+						rocket.left = true;
 						repaint();
 					}
 				}
@@ -126,7 +127,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 				if (currentState == GAME) {
 					if (rocket.x < LeagueInvaders.WIDTH - 50) {
 						System.out.println("RIGHT");
-						rocket.right();
+						rocket.right = true;
 						repaint();
 					}
 				}
@@ -137,7 +138,18 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	@Override
 	public void keyReleased(KeyEvent arg0) {
 		// TODO Auto-generated method stub
-
+		if (arg0.getKeyCode() == KeyEvent.VK_UP) {
+			rocket.up = false;
+		}
+		if (arg0.getKeyCode() == KeyEvent.VK_DOWN) {
+			rocket.down = false;
+		}
+		if (arg0.getKeyCode() == KeyEvent.VK_LEFT) {
+			rocket.left = false;
+		}
+		if (arg0.getKeyCode() == KeyEvent.VK_RIGHT) {
+			rocket.right = false;
+		}
 	}
 
 	@Override
