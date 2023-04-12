@@ -22,17 +22,17 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	Timer alienSpawn;
 	Rocketship rocket = new Rocketship(250, 700, 50, 50, 10);
 	ObjectManager karen = new ObjectManager(rocket);
-	
+
 	public static BufferedImage image;
 	public static boolean needImage = true;
-	public static boolean gotImage = false;	
-	
+	public static boolean gotImage = false;
+
 	public GamePanel() {
 		frameDraw = new Timer(1000 / 60, this);
 		frameDraw.start();
-		
+
 		if (needImage) {
-		    loadImage ("space.png");
+			loadImage("space.png");
 		}
 
 	}
@@ -111,54 +111,41 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
 			if (currentState == END) {
 				currentState = MENU;
-			} else if (currentState == MENU){
+			} else if (currentState == MENU) {
 				currentState++;
 				startGame();
-			} else if(currentState == GAME){
+			} else if (currentState == GAME) {
 				currentState++;
 				alienSpawn.stop();
 			}
 		}
-		if(arg0.getKeyCode() == KeyEvent.VK_SPACE) {
-			if(currentState == GAME) {
+		if (arg0.getKeyCode() == KeyEvent.VK_SPACE) {
+			if (currentState == GAME) {
 				karen.addProjectile(rocket.getProjectile());
 			}
 		}
 		if (currentState == GAME) {
 			if (arg0.getKeyCode() == KeyEvent.VK_UP) {
-				if (rocket.y > 0) {
 					System.out.println("UP");
 					rocket.up = true;
 					repaint();
-				}
 			}
 
 			if (arg0.getKeyCode() == KeyEvent.VK_DOWN) {
-				if (currentState == GAME) {
-					if (rocket.y < LeagueInvaders.HEIGHT - 95) {
-						System.out.println("DOWN");
-						rocket.down = true;
-						repaint();
-					}
-				}
+					System.out.println("DOWN");
+					rocket.down = true;
+					repaint();
+
 			}
 			if (arg0.getKeyCode() == KeyEvent.VK_LEFT) {
-				if (currentState == GAME) {
-					if (rocket.x > 0) {
-						System.out.println("LEFT");
-						rocket.left = true;
-						repaint();
-					}
-				}
+					System.out.println("LEFT");
+					rocket.left = true;
+					repaint();
 			}
 			if (arg0.getKeyCode() == KeyEvent.VK_RIGHT) {
-				if (currentState == GAME) {
-					if (rocket.x < LeagueInvaders.WIDTH - 50) {
-						System.out.println("RIGHT");
-						rocket.right = true;
-						repaint();
-					}
-				}
+					System.out.println("RIGHT");
+					rocket.right = true;
+					repaint();
 			}
 		}
 	}
@@ -185,19 +172,21 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		// TODO Auto-generated method stub
 
 	}
+
 	void startGame() {
-		alienSpawn = new Timer(1000 , karen);
-	    alienSpawn.start();
-	} 
+		alienSpawn = new Timer(1000, karen);
+		alienSpawn.start();
+	}
+
 	void loadImage(String imageFile) {
-	    if (needImage) {
-	        try {
-	            image = ImageIO.read(this.getClass().getResourceAsStream(imageFile));
-		    gotImage = true;
-	        } catch (Exception e) {
-	            
-	        }
-	        needImage = false;
-	    }
+		if (needImage) {
+			try {
+				image = ImageIO.read(this.getClass().getResourceAsStream(imageFile));
+				gotImage = true;
+			} catch (Exception e) {
+
+			}
+			needImage = false;
+		}
 	}
 }

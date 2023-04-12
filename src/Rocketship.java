@@ -37,16 +37,16 @@ public class Rocketship extends GameObject {
 	}
 
 	public void move() {
-		if (up) {
+		if (up && y > 0) {
 			y -= speed;
 		}
-		if (down) {
+		if (down && y < LeagueInvaders.HEIGHT - 50) {
 			y += speed;
 		}
-		if (left) {
+		if (left && x > 0) {
 			x -= speed;
 		}
-		if (right) {
+		if (right && x < LeagueInvaders.WIDTH - 50) {
 			x += speed;
 		}
 	}

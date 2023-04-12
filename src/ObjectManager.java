@@ -69,4 +69,12 @@ public class ObjectManager implements ActionListener{
 		// TODO Auto-generated method stub
 		addAlien();
 	}
+	
+	void checkCollision() {
+		for(Alien alien: aliens) {
+			if(rocket.collisionBox.intersects(alien.collisionBox)) {
+				//Ended on step 5
+			}
+		}
+	}
 }
