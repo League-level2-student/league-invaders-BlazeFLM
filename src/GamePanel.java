@@ -49,14 +49,19 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void updateMenuState() {
+		karen.score = 0;
 	}
 
 	void updateGameState() {
 		rocket.move();
 		karen.update();
+		if (rocket.isActive == false) {
+			currentState = END;
+		}
 	}
 
 	void updateEndState() {
+
 	}
 
 	void drawMenuState(Graphics g) {
@@ -87,7 +92,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		g.setColor(Color.BLACK);
 		g.drawString("Game Over", 25, 150);
 		g.setFont(instructionsFont);
-		g.drawString("You have killed enemies", 100, 300);
+		g.drawString("You have killed " + karen.getScore() + " enemies", 50, 300);
 		g.drawString("Press ENTER to restart", 50, 450);
 	}
 
@@ -110,6 +115,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		// TODO Auto-generated method stub
 		if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
 			if (currentState == END) {
+				rocket = new Rocketship(250, 700, 50, 50, 10);
+				//Ended off on step 5
+				rocket.isActive = true;
 				currentState = MENU;
 			} else if (currentState == MENU) {
 				currentState++;
@@ -126,26 +134,26 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		}
 		if (currentState == GAME) {
 			if (arg0.getKeyCode() == KeyEvent.VK_UP) {
-					System.out.println("UP");
-					rocket.up = true;
-					repaint();
+				System.out.println("UP");
+				rocket.up = true;
+				repaint();
 			}
 
 			if (arg0.getKeyCode() == KeyEvent.VK_DOWN) {
-					System.out.println("DOWN");
-					rocket.down = true;
-					repaint();
+				System.out.println("DOWN");
+				rocket.down = true;
+				repaint();
 
 			}
 			if (arg0.getKeyCode() == KeyEvent.VK_LEFT) {
-					System.out.println("LEFT");
-					rocket.left = true;
-					repaint();
+				System.out.println("LEFT");
+				rocket.left = true;
+				repaint();
 			}
 			if (arg0.getKeyCode() == KeyEvent.VK_RIGHT) {
-					System.out.println("RIGHT");
-					rocket.right = true;
-					repaint();
+				System.out.println("RIGHT");
+				rocket.right = true;
+				repaint();
 			}
 		}
 	}

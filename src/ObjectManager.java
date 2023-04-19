@@ -4,13 +4,15 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class ObjectManager implements ActionListener{
+public class ObjectManager implements ActionListener {
 
 	Rocketship rocket;
 	ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
 	ArrayList<Alien> aliens = new ArrayList<Alien>();
 	Random random = new Random();
 
+	int score = 0;
+	
 	public ObjectManager(Rocketship rocket) {
 		this.rocket = rocket;
 	}
@@ -35,7 +37,10 @@ public class ObjectManager implements ActionListener{
 			if (proj.y < 0 || proj.y > LeagueInvaders.HEIGHT) {
 				proj.isActive = false;
 			}
-
+		}
+		if(rocket.isActive == true) {
+			checkCollision();
+			purgeMaster();
 		}
 	}
 
@@ -48,16 +53,16 @@ public class ObjectManager implements ActionListener{
 			proj.draw(g);
 		}
 	}
-	
+
 	void purgeMaster() {
-		for(int i = 0; i < aliens.size(); i++) {
-			if(aliens.get(i).isActive == false) {
+		for (int i = 0; i < aliens.size(); i++) {
+			if (aliens.get(i).isActive == false) {
 				aliens.remove(i);
 				i--;
 			}
 		}
-		for(int i = 0; i < projectiles.size(); i++) {
-			if(projectiles.get(i).isActive == false) {
+		for (int i = 0; i < projectiles.size(); i++) {
+			if (projectiles.get(i).isActive == false) {
 				projectiles.remove(i);
 				i--;
 			}
@@ -69,12 +74,24 @@ public class ObjectManager implements ActionListener{
 		// TODO Auto-generated method stub
 		addAlien();
 	}
-	
+
 	void checkCollision() {
-		for(Alien alien: aliens) {
-			if(rocket.collisionBox.intersects(alien.collisionBox)) {
-				//Ended on step 5
+		for (Alien alien : aliens) {
+			for (Projectile projectile : projectiles) {
+				if (projectile.collisionBox.intersects(alien.collisionBox)) {
+					alien.isActive = false;
+					score++;
+				}
+			}
+			if (rocket.collisionBox.intersects(alien.collisionBox)) {
+				alien.isActive = false;
+
 			}
 		}
 	}
+	
+	public int getScore() {
+		return score;
+	}
+	
 }
