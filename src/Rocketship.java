@@ -36,6 +36,7 @@ public class Rocketship extends GameObject {
 	}
 
 	public void move() {
+		super.update();
 		if (up && y > 0) {
 			y -= speed;
 		}

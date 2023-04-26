@@ -84,8 +84,7 @@ public class ObjectManager implements ActionListener {
 				}
 			}
 			if (rocket.collisionBox.intersects(alien.collisionBox)) {
-				alien.isActive = false;
-
+				rocket.isActive = false;
 			}
 		}
 	}
